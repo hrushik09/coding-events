@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-    <head>
+    <head th:fragment="head">
         <meta charset="UTF-8">
-        <title></title>
+        <title>Coding Events</title>
+        <script th:src="@{/script.js}"></script>
+        <link rel="stylesheet" th:href="@{/styles.css}">
     </head>
     <body>
         <nav th:fragment="navigation">
