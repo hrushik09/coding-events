@@ -2,6 +2,7 @@ package io.hrushik09.codingevents.controllers;
 
 import io.hrushik09.codingevents.data.EventData;
 import io.hrushik09.codingevents.models.Event;
+import io.hrushik09.codingevents.models.EventType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -24,6 +25,7 @@ public class EventController {
     public String displayCreateEventForm(Model model) {
         model.addAttribute("title", "Create Event");
         model.addAttribute(new Event());
+        model.addAttribute("types", EventType.values());
         return "events/create";
     }
 

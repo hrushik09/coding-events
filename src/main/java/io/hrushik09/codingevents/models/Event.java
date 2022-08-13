@@ -17,16 +17,19 @@ public class Event {
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid Email. Try again.")
     private String contactEmail;
+    private EventType type;
 
     public Event() {
-    }
-
-    public Event(String name, String description, String contactEmail) {
         this.id = nextId;
         nextId++;
+    }
+
+    public Event(String name, String description, String contactEmail, EventType type) {
+        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.type = type;
     }
 
     public int getId() {
@@ -55,6 +58,14 @@ public class Event {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     @Override
