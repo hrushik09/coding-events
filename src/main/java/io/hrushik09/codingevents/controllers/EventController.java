@@ -3,12 +3,14 @@ package io.hrushik09.codingevents.controllers;
 import io.hrushik09.codingevents.data.EventCategoryRepository;
 import io.hrushik09.codingevents.data.EventRepository;
 import io.hrushik09.codingevents.models.Event;
+import io.hrushik09.codingevents.models.EventCategory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("events")
@@ -23,9 +25,20 @@ public class EventController {
     }
 
     @GetMapping
-    public String displayAllEvents(Model model) {
-        model.addAttribute("title", "All Events");
-        model.addAttribute("events", eventRepository.findAll());
+    public String displayAllEvents(@RequestParam(required = false) Integer categoryId, Model model) {
+        if (categoryId == null) {
+            model.addAttribute("title", "All Events");
+            model.addAttribute("events", eventRepository.findAll());
+        } else {
+            Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
+            if (result.isPresent()) {
+                EventCategory category = result.get();
+                model.addAttribute("events", category.getEvents());
+                model.addAttribute("title", "Events in category: " + category.getName());
+            } else {
+                model.addAttribute("title", "Invalid Category ID: " + categoryId);
+            }
+        }
         return "events/index";
     }
 
