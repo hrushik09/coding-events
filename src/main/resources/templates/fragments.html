@@ -8,7 +8,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <nav th:fragment="header">
+        <header th:fragment="header">
             <h1 th:text="${title}">Coding Events</h1>
             <ul class="nav">
                 <li class="nav-item"><a class="nav-link" href="/events">All Events</a></li>
@@ -16,7 +16,9 @@
                 <li class="nav-item"><a class="nav-link" href="/events/delete">Delete Events</a></li>
                 <li class="nav-item"><a class="nav-link" href="/eventCategories">All Categories</a></li>
                 <li class="nav-item"><a class="nav-link" href="/eventCategories/create">Create Category</a></li>
+                <li class="nav-item"><a class="nav-link" href="/tags">All Tags</a></li>
+                <li class="nav-item"><a class="nav-link" href="/tags/create">Create Tag</a></li>
             </ul>
-        </nav>
+        </header>
     </body>
 </html>
