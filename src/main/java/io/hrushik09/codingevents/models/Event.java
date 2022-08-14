@@ -1,8 +1,10 @@
 package io.hrushik09.codingevents.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Email;
+import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,12 +15,10 @@ public class Event extends AbstractEntity {
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters.")
     private String name;
 
-    @Size(max = 500, message = "Description too long!")
-    private String description;
-
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid Email. Try again.")
-    private String contactEmail;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Valid
+    @NotNull
+    private EventDetails eventDetails;
 
     @ManyToOne
     @NotNull(message = "Category is required")
@@ -27,10 +27,8 @@ public class Event extends AbstractEntity {
     public Event() {
     }
 
-    public Event(String name, String description, String contactEmail, EventCategory eventCategory) {
+    public Event(String name, EventCategory eventCategory) {
         this.name = name;
-        this.description = description;
-        this.contactEmail = contactEmail;
         this.eventCategory = eventCategory;
     }
 
@@ -42,20 +40,12 @@ public class Event extends AbstractEntity {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public EventDetails getEventDetails() {
+        return eventDetails;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
     }
 
     public EventCategory getEventCategory() {
