@@ -1,8 +1,8 @@
 package io.hrushik09.codingevents.controllers;
 
+import io.hrushik09.codingevents.data.EventCategoryRepository;
 import io.hrushik09.codingevents.data.EventRepository;
 import io.hrushik09.codingevents.models.Event;
-import io.hrushik09.codingevents.models.EventType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -15,9 +15,11 @@ import javax.validation.Valid;
 public class EventController {
 
     private final EventRepository eventRepository;
+    private final EventCategoryRepository eventCategoryRepository;
 
-    public EventController(EventRepository eventRepository) {
+    public EventController(EventRepository eventRepository, EventCategoryRepository eventCategoryRepository) {
         this.eventRepository = eventRepository;
+        this.eventCategoryRepository = eventCategoryRepository;
     }
 
     @GetMapping
@@ -31,7 +33,7 @@ public class EventController {
     public String displayCreateEventForm(Model model) {
         model.addAttribute("title", "Create Event");
         model.addAttribute(new Event());
-        model.addAttribute("types", EventType.values());
+        model.addAttribute("categories", eventCategoryRepository.findAll());
         return "events/create";
     }
 
