@@ -1,6 +1,6 @@
 package io.hrushik09.codingevents.controllers;
 
-import io.hrushik09.codingevents.data.EventData;
+import io.hrushik09.codingevents.data.EventRepository;
 import io.hrushik09.codingevents.models.Event;
 import io.hrushik09.codingevents.models.EventType;
 import org.springframework.stereotype.Controller;
@@ -14,10 +14,16 @@ import javax.validation.Valid;
 @RequestMapping("events")
 public class EventController {
 
+    private final EventRepository eventRepository;
+
+    public EventController(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
     @GetMapping
     public String displayAllEvents(Model model) {
         model.addAttribute("title", "All Events");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/index";
     }
 
@@ -35,14 +41,14 @@ public class EventController {
             model.addAttribute("title", "Create Event");
             return "events/create";
         }
-        EventData.add(newEvent);
+        eventRepository.save(newEvent);
         return "redirect:";
     }
 
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model) {
         model.addAttribute("title", "Delete Events");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/delete";
     }
 
@@ -50,7 +56,7 @@ public class EventController {
     public String processDeleteEventsForm(@RequestParam(required = false) int[] eventIds) {
         if (eventIds != null) {
             for (int id : eventIds) {
-                EventData.remove(id);
+                eventRepository.deleteById(id);
             }
         }
         return "redirect:";
