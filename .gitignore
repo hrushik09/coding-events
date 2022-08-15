@@ -35,5 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
-/data/events_db.mv.db
-/data/events_db.trace.db
+
+/src/main/resources/secrets.properties
